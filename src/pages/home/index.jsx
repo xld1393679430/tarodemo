@@ -20,7 +20,7 @@ import './index.less'
     dispatch(asyncAdd())
   }
 }))
-class Index extends Component {
+class Home extends Component {
   componentWillReceiveProps (nextProps) {
     console.log(this.props, nextProps)
   }
@@ -33,16 +33,16 @@ class Index extends Component {
 
   render () {
     return (
-      <View className='index'>
+      <View className='home'>
         <Button className='add_btn' onClick={this.props.add}>+</Button>
         <Button className='dec_btn' onClick={this.props.dec}>-</Button>
         <Button className='dec_btn' onClick={this.props.asyncAdd}>async</Button>
         <View><Text>{this.props.counter.num}</Text></View>
-        <View><Text className='hello'>Hello, World</Text></View>
+        <View><Text>Hello, World</Text></View>
       </View>
     )
   }
 }
 
-export default Index
+export default Home
 

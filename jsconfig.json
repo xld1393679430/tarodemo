@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["./src/components/*"],
+      "@/utils/*": ["./src/utils/*"],
+      "@/styles/*": ["./src/styles/*"],
+      "@/apis/*": ["./src/apis/*"],
+      "@/store/*": ["./src/store/*"],
+      "@/actions/*": ["./src/actions/*"],
+      "@/constants/*": ["./src/constants/*"],
+      "@/reducers/*": ["./src/reducers/*"],
+      "@/images/*": ["./src/assets/images/*"]
+    },
+    "jsx": "react"
+  },
+  "exclude": ["node_modules", "build", "config", "scripts"]
+}
