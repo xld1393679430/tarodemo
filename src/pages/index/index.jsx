@@ -1,48 +1,116 @@
-import { Component } from 'react'
-import { connect } from 'react-redux'
-import { View, Button, Text } from '@tarojs/components'
+import { Component, createRef } from "react";
+import { connect } from "react-redux";
+import { View, Text, Button, Swiper, SwiperItem } from "@tarojs/components";
+import Taro, { eventCenter, getCurrentInstance } from "@tarojs/taro";
+import { add, minus, asyncAdd } from "@/actions/counter";
+import setTitle from '@/utils/title/set_title'
 
-import { add, minus, asyncAdd } from '@/actions/counter'
+import "./index.less";
 
-import './index.less'
-
-
-@connect(({ counter }) => ({
-  counter
-}), (dispatch) => ({
-  add () {
-    dispatch(add())
-  },
-  dec () {
-    dispatch(minus())
-  },
-  asyncAdd () {
-    dispatch(asyncAdd())
-  }
-}))
+@connect(
+  ({ counter }) => ({
+    counter,
+  }),
+  (dispatch) => ({
+    add() {
+      dispatch(add());
+    },
+    dec() {
+      dispatch(minus());
+    },
+    asyncAdd() {
+      dispatch(asyncAdd());
+    },
+  })
+)
 class Index extends Component {
-  componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
+  componentDidMount() {
+    console.log("componentDidMount", this.el);
+    const onReadyEventId  = this.$instance.router.onReady
+    eventCenter.once(onReadyEventId, () => {
+      console.log('eventCenter---onReady')
+      Taro.createSelectorQuery().select('#only').boundingClientRect().exec(res => {
+        console.log(1234, res)
+      })
+    })
   }
 
-  componentWillUnmount () { }
+  componentWillReceiveProps(nextProps) {
+    console.log(this.props, nextProps);
+  }
 
-  componentDidShow () { }
+  componentWillUnmount() {}
 
-  componentDidHide () { }
+  componentDidShow() {
+    console.log("componentDidShow", this.el);
+  }
 
-  render () {
+  componentDidHide() {}
+
+  onReady() {
+    console.log("onReady", this.el);
+    Taro.createSelectorQuery()
+      .select("#only")
+      .boundingClientRect()
+      .exec((res) => {
+        console.log("createSelectorQuery", res, 2222);
+      });
+  }
+
+  enableShareAppMessage() {
+
+  }
+
+  $instance = getCurrentInstance()
+  el = createRef();
+
+  handleNavigate = () => {
+    Taro.navigateTo({
+      url: '/pages/home/index?a=1'
+    })
+  }
+
+  handleChangeTitle = () => {
+    setTitle('新的标题')
+  }
+
+  render() {
+    const html = `<h1 style="color: red">Wallace is way taller than other reporters.</h1>`;
+
     return (
       <View className='index'>
-        <Button className='add_btn' onClick={this.props.add}>+</Button>
-        <Button className='dec_btn' onClick={this.props.dec}>-</Button>
-        <Button className='dec_btn' onClick={this.props.asyncAdd}>async</Button>
-        <View><Text>{this.props.counter.num}</Text></View>
-        <View><Text className='hello'>Hello, World</Text></View>
+        {/* <View dangerouslySetInnerHTML={{ __html: html }}></View> */}
+        <Button className='add_btn' onClick={this.props.add}>
+          +
+        </Button>
+        <Button className='dec_btn' onClick={this.props.dec}>
+          -
+        </Button>
+        <Button className='dec_btn' onClick={this.props.asyncAdd}>
+          async
+        </Button>
+        <Button onClick={this.handleNavigate}>跳转到home页面</Button>
+        <Button onClick={this.handleChangeTitle}>修改title</Button>
+        <View ref={this.el} id='only'>
+          <Text>{this.props.counter.num}</Text>
+        </View>
+        <View>
+          <Text className='hello'>Hello, World</Text>
+        </View>
+        <Swiper className='swiper' interval={1000} indicatorColor='#999'>
+          <SwiperItem>
+            <View className='swiper-item-text'>1</View>
+          </SwiperItem>
+          <SwiperItem>
+            <View className='swiper-item-text'>2</View>
+          </SwiperItem>
+          <SwiperItem>
+            <View className='swiper-item-text'>3</View>
+          </SwiperItem>
+        </Swiper>
       </View>
-    )
+    );
   }
 }
 
-export default Index
-
+export default Index;
