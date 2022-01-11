@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { View, Button, Text } from "@tarojs/components";
 import { getCurrentInstance } from "@tarojs/taro";
 import { add, minus, asyncAdd } from "@/actions/counter";
+import { createBrowserHistory } from 'history';
+
 
 import "./index.less";
 
@@ -24,14 +26,26 @@ import "./index.less";
 )
 class Home extends Component {
   componentDidMount() {
+    // 路由守卫
     console.log(this.$instance.router.params, 2222);
+    const history = createBrowserHistory()
+    console.log(history, 'window.history')
+    this.unblock = history.block(tx => {
+      console.log(2222)
+      if(window.confirm('确认离开吗')) {
+        this.unblock()
+        tx.retry()
+      }
+    })
   }
 
   componentWillReceiveProps(nextProps) {
     console.log(this.props, nextProps);
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.unblock && this.unblock()
+  }
 
   componentDidShow() {}
 
@@ -50,6 +64,9 @@ class Home extends Component {
         </Button>
         <Button className='dec_btn' onClick={this.props.asyncAdd}>
           async
+        </Button>
+        <Button className='dec_btn' onClick={this.handleBack}>
+        handleBack
         </Button>
         <View>
           <Text>{this.props.counter.num}</Text>

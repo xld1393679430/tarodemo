@@ -5222,7 +5222,7 @@ he@1.2.x, he@^1.2.0:
   resolved "http://registry.npm.release.ctripcorp.com/he/download/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha1-hK5l+n6vsWX922FWauFLrwVmTw8=
 
-history@^5.1.0:
+history@^5.1.0, history@^5.2.0:
   version "5.2.0"
   resolved "http://registry.npm.release.ctripcorp.com/history/download/history-5.2.0.tgz#7cdd31cf9bac3c5d31f09c231c9928fad0007b7c"
   integrity sha1-fN0xz5usPF0x8JwjHJko+tAAe3w=

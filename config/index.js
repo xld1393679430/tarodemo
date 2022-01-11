@@ -67,6 +67,9 @@ const config = {
         },
       },
     },
+    router: {
+      mode: 'browser'
+    }
   },
 };
 
