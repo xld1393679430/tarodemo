@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import { View, Button, Text } from "@tarojs/components";
-import { getCurrentInstance } from "@tarojs/taro";
+import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { add, minus, asyncAdd } from "@/actions/counter";
 import { createBrowserHistory } from 'history';
 
@@ -25,6 +25,10 @@ import "./index.less";
   })
 )
 class Home extends Component {
+  async componentWillMount() {
+    const preloadData = await Taro.getCurrentInstance().preloadData
+    console.log(preloadData?.data, 'preloadData')
+  }
   componentDidMount() {
     // 路由守卫
     console.log(this.$instance.router.params, 2222);
